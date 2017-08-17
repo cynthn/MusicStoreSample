@@ -12,8 +12,8 @@ netsh advfirewall firewall add rule name="http" dir=in action=allow protocol=TCP
 New-Item -ItemType Directory c:\music
 
 # Download the files and configure the app
-Invoke-WebRequest  https://github.com/neilpeterson/nepeters-azure-templates/raw/master/dotnet-core-music-vm-sql-db/music-app/music-store-azure-demo-pub.zip -OutFile c:\temp\musicstore.zip
-Expand-Archive C:\temp\musicstore.zip c:\music
+Invoke-WebRequest  https://github.com/neilpeterson/nepeters-azure-templates/raw/master/dotnet-core-music-vm-sql-db/music-app/music-store-azure-demo-pub.zip -OutFile $env:temp\musicstore.zip
+Expand-Archive $env:temp\musicstore.zip c:\music
 (Get-Content C:\music\config.json) | ForEach-Object { $_ -replace "<replaceserver>", $sqlserver } | Set-Content C:\music\config.json
 (Get-Content C:\music\config.json) | ForEach-Object { $_ -replace "<replaceuser>", $user } | Set-Content C:\music\config.json
 (Get-Content C:\music\config.json) | ForEach-Object { $_ -replace "<replacepass>", $password } | Set-Content C:\music\config.json
